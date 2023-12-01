@@ -12,40 +12,50 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import pandas as pd
+import matplotlib.pyplot as plt
 import streamlit as st
-from streamlit.logger import get_logger
 
-LOGGER = get_logger(__name__)
+# Load your data
+day_top = pd.read_csv('day_topstocks.csv')
+econ_ind = pd.read_csv('economic_indicatorsvc.csv')
+option_data = pd.read_csv('outputt.csv')
 
-
-def run():
-    st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
-    )
-
-    st.write("# Welcome to Streamlit! 👋")
-
-    st.sidebar.success("Select a demo above.")
-
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
+# Assuming day_top DataFrame has columns: 'Stock', 'Change'
+# 'Change' column can be positive for gainers and negative for losers
 
 
-if __name__ == "__main__":
-    run()
+# Separate top gainers and top losers
+top_gainers = day_top[day_top['category']=='Top Gainers']  # Adjust the number based on your preference
+top_losers = day_top[day_top['category']=='Top Losers']  # Adjust the number based on your preference
+most_actively_traded = day_top[day_top['category'] == 'Most Actively Traded'] # Adjust the number based on your preference
+
+# Create a Streamlit app
+st.title('Day Top Gainers and Losers')
+
+
+fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(60,45))
+ax1.barh(top_losers['ticker'], top_losers['change_percentage'], color='red')
+ax1.set_xlabel('Change Percentage (%)',fontsize=25)
+ax1.set_ylabel('Ticker',fontsize=25)
+ax1.set_title('Top Gainers and Losers',fontsize=25)
+ax1.tick_params(axis='both', labelsize=25)
+
+# Create a second y-axis for top gainers on the right side
+ax2 = ax1.twinx()
+ax2.barh(top_gainers['ticker'], top_gainers['change_percentage'], color='green')
+ax2.set_ylabel('Ticker',fontsize=25)
+ax2.tick_params(axis='both', labelsize=25)
+
+
+ax3.bar(most_actively_traded['ticker'], most_actively_traded['volume'], color='orange')
+ax3.set_xlabel('Volume (in 100M)', fontsize=25)
+ax3.set_ylabel('Ticker', fontsize=25)
+ax3.set_title('Most Actively Traded', fontsize=25)
+ax3.tick_params(axis='both', labelsize=25)
+
+# Adjust layout for better spacing
+plt.tight_layout()
+
+# Show the plot
+st.pyplot(fig)
