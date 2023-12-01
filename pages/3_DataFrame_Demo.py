@@ -23,22 +23,18 @@ from streamlit.hello.utils import show_code
 
 def data_frame_demo():
     @st.cache_data
-    def get_UN_data():
-        AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
-        df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
-        return df.set_index("Region")
+    econ_ind = pd.read_csv('economic_indicatorsvc.csv')    
 
     try:
-        df = get_UN_data()
-        countries = st.multiselect(
-            "Choose countries", list(df.index), ["China", "United States of America"]
+        econ_ind = pd.read_csv('economic_indicatorsvc.csv') 
+        indicators = st.multiselect(
+            "Choose indicators", list(econ_ind.index), ["Consumer Price Inflation", "FED Interest Rate"]
         )
-        if not countries:
-            st.error("Please select at least one country.")
+        if not indicators:
+            st.error("Please select at least one indicator.")
         else:
-            data = df.loc[countries]
-            data /= 1000000.0
-            st.write("### Gross Agricultural Production ($B)", data.sort_index())
+            data = econ_ind.loc[indicators]
+            st.write("### Economic Data of USA", data.sort_index())
 
             data = data.T.reset_index()
             data = pd.melt(data, id_vars=["index"]).rename(
@@ -49,8 +45,8 @@ def data_frame_demo():
                 .mark_area(opacity=0.3)
                 .encode(
                     x="year:T",
-                    y=alt.Y("Gross Agricultural Product ($B):Q", stack=None),
-                    color="Region:N",
+                    y=alt.Y("Indicator:Q", stack=None),
+                    color="Indicator:N",
                 )
             )
             st.altair_chart(chart, use_container_width=True)
@@ -68,10 +64,9 @@ st.set_page_config(page_title="DataFrame Demo", page_icon="📊")
 st.markdown("# DataFrame Demo")
 st.sidebar.header("DataFrame Demo")
 st.write(
-    """This demo shows how to use `st.write` to visualize Pandas DataFrames.
-(Data courtesy of the [UN Data Explorer](http://data.un.org/Explorer.aspx).)"""
+    """This Data shows the relation between different economic indicators"""
 )
 
 data_frame_demo()
 
-show_code(data_frame_demo)
+#show_code(data_frame_demo)
