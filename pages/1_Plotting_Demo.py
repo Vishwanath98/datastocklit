@@ -16,11 +16,42 @@ import time
 
 import numpy as np
 
+import pandas as pd
 import streamlit as st
-from streamlit.hello.utils import show_code
+import matplotlib.pyplot as plt
+
+economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
+economic_data.set_index('date', inplace=True)
+
+# Streamlit app
+st.title('Economic Indicators Line Chart')
+
+# Dropdown to select column
+selected_column = st.selectbox('Select Column:', economic_data.columns)
+
+st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+st.markdown("# Plotting Demo")
+st.sidebar.header("Plotting Demo")
+st.write(
+    """This demo illustrates a combination of plotting and animation with
+Streamlit. We're generating a bunch of random numbers in a loop for around
+5 seconds. Enjoy!"""
+)
+
+# Plotting using matplotlib
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(economic_data.index, economic_data[selected_column])
+ax.set_xlabel('Date')
+#ax.set_ylabel(selected_column)
+ax.set_title(f'{selected_column} over Time')
 
 
-def plotting_demo():
+# Display the plot in Streamlit
+st.pyplot(fig)
+
+
+
+"""def plotting_demo():
     progress_bar = st.sidebar.progress(0)
     status_text = st.sidebar.empty()
     last_rows = np.random.randn(1, 1)
@@ -34,23 +65,15 @@ def plotting_demo():
         last_rows = new_rows
         time.sleep(0.05)
 
-    progress_bar.empty()
+    progress_bar.empty()"""
 
     # Streamlit widgets automatically run the script from top to bottom. Since
     # this button is not connected to any other logic, it just causes a plain
     # rerun.
-    st.button("Re-run")
+    #st.button("Re-run")
 
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
-st.markdown("# Plotting Demo")
-st.sidebar.header("Plotting Demo")
-st.write(
-    """This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!"""
-)
 
-plotting_demo()
+#plotting_demo()
 
-show_code(plotting_demo)
+#show_code(plotting_demo)
