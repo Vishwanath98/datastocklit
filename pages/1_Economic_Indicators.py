@@ -61,7 +61,6 @@ fig.update_layout(
     xaxis_range=[common_start_date, scaled_data.index[-1]],  # Initial x-axis range for zooming
     yaxis_range=[0, 1]  # Initial y-axis range for zooming
 )
-)
 fig.update_layout(
     updatemenus=[
         dict(
