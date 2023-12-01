@@ -43,7 +43,7 @@ def topgl():
     
     return merged_df
 
-topgl().to_csv('economic_indicatorsvc.csv', index=True)
+topgl().to_csv('day_topstocks.csv', index=True)
 
 # Load your data
 day_top = pd.read_csv('day_topstocks.csv')
