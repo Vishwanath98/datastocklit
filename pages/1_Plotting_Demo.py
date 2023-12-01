@@ -23,13 +23,15 @@ import matplotlib.pyplot as plt
 economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
+st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+
 # Streamlit app
 st.title('Economic Indicators Line Chart')
 
 # Dropdown to select column
 selected_column = st.selectbox('Select Column:', economic_data.columns)
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+
 st.markdown("# Plotting Demo")
 st.sidebar.header("Plotting Demo")
 st.write(
