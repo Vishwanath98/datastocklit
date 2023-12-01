@@ -44,13 +44,17 @@ fig, ax = plt.subplots(figsize=(10, 6))
 # Generating unique colors for each selected column
 colors = plt.cm.get_cmap('tab10', len(selected_columns))
 
-for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
-    ax.plot(economic_data.index, economic_data[column], label=column, color=color)
-"""
+#for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
+ #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
+
 fig = px.line(economic_data, x=economic_data.index, y=selected_columns, labels={'index': 'Date', 'value': 'Value'}, title='Columns over Time')
 fig.update_layout(hovermode='x unified', height=600, width=1000)  # Adjust the height and width
-fig.update_traces(mode='lines+markers', line=dict(width=1))  # Set line thickness
-
+fig.update_traces(mode='lines', line=dict(width=1))  # Set line thickness
+fig.update_layout(
+    xaxis=dict(
+        range=[pd.to_datetime('1940-01-01'), economic_data.index[-1]]  # Adjust the starting date as needed
+    )
+)
 st.plotly_chart(fig)
 """
 # Plotting using matplotlib
