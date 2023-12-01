@@ -51,7 +51,7 @@ colors = plt.cm.get_cmap('tab10', len(selected_columns))
 #for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
  #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
 
-fig = px.line(economic_data, x=economic_data.index, y=selected_columns, labels={'index': 'Date', 'value': 'Value'}, title='Columns over Time')
+fig = px.line(economic_data, x=economic_data.index, y=selected_columns, labels={'index': 'Date', 'value': 'Value'}, title='Indicator over Time')
 fig.update_layout(hovermode='x unified', height=600, width=1000)  # Adjust the height and width
 fig.update_traces(mode='lines', line=dict(width=2))  # Set line thickness
 fig.update_layout(
@@ -75,17 +75,4 @@ fig.update_layout(
     ]
 )
 st.plotly_chart(fig)
-"""
-# Plotting using matplotlib
-ax.set_xlabel('Date')
-#ax.set_ylabel(selected_column)
-ax.set_title(f'Economic Indicators over Time')
-ax.legend()
-
-# Enable hovering support using mplcursors
-mplcursors.cursor(hover=True).connect("add", lambda sel: sel.annotation.set_text(f"{sel.artist.get_label()}: {sel.target[1]:.2f}"))
-
-# Display the plot in Streamlit
-st.pyplot(fig)"""
-
 
