@@ -67,6 +67,6 @@ ax.legend()
 mplcursors.cursor(hover=True).connect("add", lambda sel: sel.annotation.set_text(f"{sel.artist.get_label()}: {sel.target[1]:.2f}"))
 
 # Display the plot in Streamlit
-st.pyplot(fig)
+st.pyplot(fig)"""
 
 
