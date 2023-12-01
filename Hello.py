@@ -34,7 +34,7 @@ most_actively_traded = day_top[day_top['category'] == 'Most Actively Traded'] # 
 st.title('Day Top Gainers and Losers')
 
 
-fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(60,45))
+fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(50,40))
 ax1.barh(top_losers['ticker'], top_losers['change_percentage'], color='red')
 ax1.set_xlabel('Change Percentage (%)',fontsize=25)
 ax1.set_ylabel('Ticker',fontsize=25)
