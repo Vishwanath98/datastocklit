@@ -60,28 +60,28 @@ top_losers = day_top[day_top['category']=='Top Losers']  # Adjust the number bas
 most_actively_traded = day_top[day_top['category'] == 'Most Actively Traded'] # Adjust the number based on your preference
 
 # Create a Streamlit app
-st.title('Day Top Gainers and Losers')
+st.title('Day Top Gainers, Losers & Most Traded')
 
 
 fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(50,40))
 ax1.barh(top_losers['ticker'], top_losers['change_percentage'], color='red')
-ax1.set_xlabel('Change Percentage (%)',fontsize=25)
-ax1.set_ylabel('Ticker',fontsize=25)
-ax1.set_title('Top Gainers and Losers',fontsize=25)
-ax1.tick_params(axis='both', labelsize=25)
+ax1.set_xlabel('Change Percentage (%)',fontsize=30)
+ax1.set_ylabel('Ticker',fontsize=30)
+ax1.set_title('Top Gainers and Losers',fontsize=30)
+ax1.tick_params(axis='both', labelsize=30)
 
 # Create a second y-axis for top gainers on the right side
 ax2 = ax1.twinx()
 ax2.barh(top_gainers['ticker'], top_gainers['change_percentage'], color='green')
-ax2.set_ylabel('Ticker',fontsize=25)
-ax2.tick_params(axis='both', labelsize=25)
+ax2.set_ylabel('Ticker',fontsize=30)
+ax2.tick_params(axis='both', labelsize=30)
 
 
 ax3.bar(most_actively_traded['ticker'], most_actively_traded['volume'], color='orange')
-ax3.set_xlabel('Volume (in 100M)', fontsize=25)
-ax3.set_ylabel('Ticker', fontsize=25)
-ax3.set_title('Most Actively Traded', fontsize=25)
-ax3.tick_params(axis='both', labelsize=25)
+ax3.set_xlabel('Volume (in 100M)', fontsize=30)
+ax3.set_ylabel('Ticker', fontsize=30)
+ax3.set_title('Most Actively Traded', fontsize=30)
+ax3.tick_params(axis='both', labelsize=30)
 
 # Adjust layout for better spacing
 plt.tight_layout()
