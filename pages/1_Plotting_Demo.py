@@ -23,9 +23,9 @@ import matplotlib.pyplot as plt
 economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+st.set_page_config(page_title="Economic indicators", page_icon="📈")
 st.markdown("# Economic indicators")
-st.sidebar.header("Economic Indicators")
+#st.sidebar.header("Economic Indicators")
 st.write(
     """This graph illustrates a combination of Economic Indicators plotted over time!"""
 )
@@ -50,8 +50,8 @@ for column, color in zip(selected_columns, colors(np.arange(len(selected_columns
 # Plotting using matplotlib
 ax.set_xlabel('Date')
 #ax.set_ylabel(selected_column)
-ax.set_title(f'{selected_column} over Time')
-
+ax.set_title(f'Economic Indicators over Time')
+ax.legend()
 
 # Display the plot in Streamlit
 st.pyplot(fig)
