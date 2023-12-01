@@ -24,16 +24,15 @@ economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
 st.set_page_config(page_title="Economic indicators", page_icon="📈")
-st.markdown("# Economic indicators")
+# Streamlit app
+st.title('Economic Indicators Line Chart')
+#st.markdown("# Economic indicators")
 #st.sidebar.header("Economic Indicators")
 st.write(
     """This graph illustrates a combination of Economic Indicators plotted over time!"""
 )
-# Streamlit app
-st.title('Economic Indicators Line Chart')
 
-# Dropdown to select column
-selected_column = st.selectbox('Select Column:', economic_data.columns)
+
 
 selected_columns = st.multiselect('Select Columns:', economic_data.columns)
 
@@ -52,6 +51,9 @@ ax.set_xlabel('Date')
 #ax.set_ylabel(selected_column)
 ax.set_title(f'Economic Indicators over Time')
 ax.legend()
+
+# Enable hovering support using mplcursors
+mplcursors.cursor(hover=True).connect("add", lambda sel: sel.annotation.set_text(f"{sel.artist.get_label()}: {sel.target[1]:.2f}"))
 
 # Display the plot in Streamlit
 st.pyplot(fig)
