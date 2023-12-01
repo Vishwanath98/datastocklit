@@ -24,25 +24,30 @@ economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
 st.set_page_config(page_title="Plotting Demo", page_icon="📈")
-
+st.markdown("# Economic indicators")
+st.sidebar.header("Economic Indicators")
+st.write(
+    """This graph illustrates a combination of Economic Indicators plotted over time!"""
+)
 # Streamlit app
 st.title('Economic Indicators Line Chart')
 
 # Dropdown to select column
 selected_column = st.selectbox('Select Column:', economic_data.columns)
 
+selected_columns = st.multiselect('Select Columns:', economic_data.columns)
 
-st.markdown("# Plotting Demo")
-st.sidebar.header("Plotting Demo")
-st.write(
-    """This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!"""
-)
+# Plotting using matplotlib with unique colors
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Generating unique colors for each selected column
+colors = plt.cm.get_cmap('tab10', len(selected_columns))
+
+for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
+    ax.plot(economic_data.index, economic_data[column], label=column, color=color)
+    
 
 # Plotting using matplotlib
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.plot(economic_data.index, economic_data[selected_column])
 ax.set_xlabel('Date')
 #ax.set_ylabel(selected_column)
 ax.set_title(f'{selected_column} over Time')
