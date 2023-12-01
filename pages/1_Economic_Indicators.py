@@ -46,7 +46,7 @@ selected_columns = st.multiselect('Select Columns:', economic_data.columns)
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Generating unique colors for each selected column
-colors = plt.cm.get_cmap('tab10', len(selected_columns))
+colors = plt.matplotlib.colormaps.get_cmap('tab10', len(selected_columns))
 
 #for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
  #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
