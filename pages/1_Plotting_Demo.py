@@ -20,6 +20,7 @@ import mplcursors  # Added for hovering support
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
@@ -43,10 +44,16 @@ fig, ax = plt.subplots(figsize=(10, 6))
 # Generating unique colors for each selected column
 colors = plt.cm.get_cmap('tab10', len(selected_columns))
 
-for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
-    ax.plot(economic_data.index, economic_data[column], label=column, color=color)
-    
+#for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
+ #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
 
+fig = px.line(economic_data, x=economic_data.index, y=selected_columns, labels={'index': 'Date', 'value': 'Value'}, title='Columns over Time')
+fig.update_layout(hovermode='x unified')  # Enables hover details
+fig.update_traces(mode='lines+markers')  # Show markers along with lines for better visibility
+
+# Display the plot in Streamlit
+st.plotly_chart(fig)
+"""
 # Plotting using matplotlib
 ax.set_xlabel('Date')
 #ax.set_ylabel(selected_column)
@@ -57,6 +64,6 @@ ax.legend()
 mplcursors.cursor(hover=True).connect("add", lambda sel: sel.annotation.set_text(f"{sel.artist.get_label()}: {sel.target[1]:.2f}"))
 
 # Display the plot in Streamlit
-st.pyplot(fig)
+st.pyplot(fig)"""
 
 
