@@ -22,7 +22,7 @@ from streamlit.hello.utils import show_code
 
 
 def data_frame_demo():
-    @st.cache_data
+    #@st.cache_data
     econ_ind = pd.read_csv('economic_indicatorsvc.csv')    
 
     try:
