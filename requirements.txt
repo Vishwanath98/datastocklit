@@ -4,4 +4,3 @@ pandas
 pydeck
 streamlit
 matplotlib
-streamlit run Day_Top_Stocks.py
