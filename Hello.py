@@ -15,6 +15,35 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
+import requests
+
+def topgl():
+    
+    top_gl_url = 'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=OEW6DWI5S3P1B2N1'
+
+
+    r = requests.get(top_gl_url)
+    data = r.json()
+    
+    top_gainers_df = pd.DataFrame(data['top_gainers'])
+    top_losers_df = pd.DataFrame(data['top_losers'])
+    most_actively_traded_df = pd.DataFrame(data['most_actively_traded'])
+    
+    top_gainers_df['category'] = 'Top Gainers'
+    top_losers_df['category'] = 'Top Losers'
+    most_actively_traded_df['category'] = 'Most Actively Traded'
+
+    # Concatenate the DataFrames vertically
+    merged_df = pd.concat([top_gainers_df, top_losers_df, most_actively_traded_df], ignore_index=True)
+    merged_df['change_percentage'] = merged_df['change_percentage'].replace('%', '', regex=True)
+
+    # Convert columns to numeric if needed
+    numeric_columns = ['price', 'change_amount', 'change_percentage', 'volume']
+    merged_df[numeric_columns] = merged_df[numeric_columns].apply(pd.to_numeric, errors='coerce')
+    
+    return merged_df
+
+topgl().to_csv('economic_indicatorsvc.csv', index=True)
 
 # Load your data
 day_top = pd.read_csv('day_topstocks.csv')
