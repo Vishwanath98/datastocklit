@@ -25,6 +25,8 @@ import plotly.express as px
 economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
+common_start_date = economic_data.min(axis=0).idxmax()
+
 st.set_page_config(page_title="Economic indicators", page_icon="📈")
 # Streamlit app
 st.title('Economic Indicators Line Chart')
@@ -52,7 +54,7 @@ fig.update_layout(hovermode='x unified', height=600, width=1000)  # Adjust the h
 fig.update_traces(mode='lines', line=dict(width=2))  # Set line thickness
 fig.update_layout(
     xaxis=dict(
-        range=[pd.to_datetime('1950-01-01'), economic_data.index[-1]]  # Adjust the starting date as needed
+        range=[common_start_date, economic_data.index[-1]]  # Adjust the starting date as needed
     )
 )
 st.plotly_chart(fig)
