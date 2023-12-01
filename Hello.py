@@ -60,7 +60,7 @@ top_losers = day_top[day_top['category']=='Top Losers']  # Adjust the number bas
 most_actively_traded = day_top[day_top['category'] == 'Most Actively Traded'] # Adjust the number based on your preference
 
 # Create a Streamlit app
-st.title('Day Top Gainers, Losers & Most Traded')
+st.title('Top Stocks of the Day ')
 
 
 fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(50,40))
