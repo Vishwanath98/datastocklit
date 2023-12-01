@@ -63,7 +63,7 @@ most_actively_traded = day_top[day_top['category'] == 'Most Actively Traded'] # 
 st.title('Top Stocks of the Day ')
 
 
-fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(50,40))
+fig,(ax1, ax3) = plt.subplots(ncols=2, figsize=(50,40),gridspec_kw={'width_ratios': [2, 3]})
 ax1.barh(top_losers['ticker'], top_losers['change_percentage'], color='red')
 ax1.set_xlabel('Change Percentage (%)',fontsize=30)
 ax1.set_ylabel('Ticker',fontsize=30)
@@ -84,7 +84,7 @@ ax3.set_title('Most Actively Traded', fontsize=30)
 ax3.tick_params(axis='both', labelsize=30)
 
 # Adjust layout for better spacing
-plt.tight_layout(rect=[0, 0, 1, 1])
+plt.subplots_adjust(wspace=0.4)
 
 # Show the plot
 st.pyplot(fig, use_container_width=True)
