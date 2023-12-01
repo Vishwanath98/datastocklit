@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#scaler = StandardScaler()
+#standardized_data = scaler.fit_transform(economic_data[selected_columns])
+
+
+
 import time
 
 import numpy as np
@@ -44,7 +49,7 @@ scaled_data = (economic_data[selected_columns] - economic_data[selected_columns]
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Generating unique colors for each selected column
-colors = plt.matplotlib.colormaps.get_cmap('tab10', len(selected_columns))
+colors = plt.cm.get_cmap('tab10', len(selected_columns))
 
 #for column, color in zip(selected_columns, colors(np.arange(len(selected_columns)))):
  #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
