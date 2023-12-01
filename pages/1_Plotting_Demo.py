@@ -48,10 +48,9 @@ colors = plt.cm.get_cmap('tab10', len(selected_columns))
  #   ax.plot(economic_data.index, economic_data[column], label=column, color=color)
 
 fig = px.line(economic_data, x=economic_data.index, y=selected_columns, labels={'index': 'Date', 'value': 'Value'}, title='Columns over Time')
-fig.update_layout(hovermode='x unified')  # Enables hover details
-fig.update_traces(mode='lines+markers')  # Show markers along with lines for better visibility
+fig.update_layout(hovermode='x unified', height=600, width=1000)  # Adjust the height and width
+fig.update_traces(mode='lines+markers', line=dict(width=1))  # Set line thickness
 
-# Display the plot in Streamlit
 st.plotly_chart(fig)
 """
 # Plotting using matplotlib
