@@ -26,6 +26,8 @@ economic_data = pd.read_csv('economic_indicatorsvc.csv', parse_dates=['date'])
 economic_data.set_index('date', inplace=True)
 
 common_start_date = economic_data.min(axis=0).idxmax()
+scaled_data = (economic_data[selected_columns] - economic_data[selected_columns].min()) / (economic_data[selected_columns].max() - economic_data[selected_columns].min())
+
 
 st.set_page_config(page_title="Economic indicators", page_icon="📈")
 # Streamlit app
@@ -55,7 +57,22 @@ fig.update_traces(mode='lines', line=dict(width=2))  # Set line thickness
 fig.update_layout(
     xaxis=dict(
         range=[common_start_date, economic_data.index[-1]]  # Adjust the starting date as needed
-    )
+    ),
+    xaxis_range=[common_start_date, scaled_data.index[-1]],  # Initial x-axis range for zooming
+    yaxis_range=[0, 1]  # Initial y-axis range for zooming
+)
+)
+fig.update_layout(
+    updatemenus=[
+        dict(
+            type="buttons",
+            showactive=False,
+            buttons=[
+                dict(label="Zoom In", method="relayout", args=["xaxis.range[0]", "xaxis.range[1]"]),
+                dict(label="Zoom Out", method="relayout", args=["xaxis.range[0]", "xaxis.range[1]"]),
+            ],
+        )
+    ]
 )
 st.plotly_chart(fig)
 """
