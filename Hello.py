@@ -84,7 +84,7 @@ ax3.set_title('Most Actively Traded', fontsize=30)
 ax3.tick_params(axis='both', labelsize=30)
 
 # Adjust layout for better spacing
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0, 1, 1])
 
 # Show the plot
-st.pyplot(fig)
+st.pyplot(fig, use_container_width=True)
